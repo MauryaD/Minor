@@ -3,7 +3,10 @@ const int motorPin1  = 5;
 const int motorPin2  = 6;  
 //Motor B
 const int motorPin3  = 10; 
-const int motorPin4  = 9;  
+const int motorPin4  = 9; 
+// For distance
+int trigPin = 12;
+int echoPin = 11; 
 void setup() {
   Serial.begin(9600);
   // pin 0 and 1 == Rx and Tx resp, are connected with Tx and Rx of Bolt.
@@ -17,8 +20,8 @@ void setup() {
   pinMode(motorPin3, OUTPUT);
   pinMode(motorPin4, OUTPUT);
 
-  pinMode(12, OUTPUT);  //for dist
-  pinMode(11, INPUT);
+  pinMode(trigPin, OUTPUT);  //for dist
+  pinMode(echoPin, INPUT);
 }
 
 float calcdist()
@@ -31,21 +34,25 @@ float calcdist()
   digitalWrite(12, LOW);
   duration = pulseIn(11, HIGH);
   distance = (duration*.0343)/2;
-  //Serial.print("Distance: ");
-  //Serial.println(distance);
-  //delay(100);  
+  Serial.print("Distance: ");
+  Serial.println(distance);
+  delay(100);  
 //  if(distance < 20)
 //    {
-//      digitalWrite(5,LOW);
-//      digitalWrite(6,LOW);
-//      digitalWrite(10,LOW);
-//      digitalWrite(9,LOW);
+//    digitalWrite(motorPin1, LOW);
+//    digitalWrite(motorPin2, LOW);
+//    digitalWrite(motorPin3, LOW);
+//    digitalWrite(motorPin4, LOW);
 //    }
 return distance;
 }
 
 void loop() {
   int left, right, forward, backward,Stop;
+  float dist;
+  dist = calcdist();
+  if(dist>20)
+  {
   forward = digitalRead(2); //p1
   backward = digitalRead(4);  //p2
   left = digitalRead(7);  //p3
@@ -59,6 +66,9 @@ void loop() {
   Serial.print(left);
   Serial.print("\t right:");
   Serial.print(right);
+  Serial.print("\t Stop:");
+  Serial.print(Stop);
+  
  //Serial.print("hello");
   
   if(forward == 1)   //p1
@@ -107,7 +117,7 @@ void loop() {
     digitalWrite(motorPin4, LOW);
   }
 
-  /*if(Stop == 1)
+  if(Stop == 1)
   {
     forward = digitalRead(2); 
     backward = digitalRead(4);
@@ -117,9 +127,14 @@ void loop() {
     digitalWrite(motorPin2, LOW);
     digitalWrite(motorPin3, LOW);
     digitalWrite(motorPin4, LOW);
-    
   }
-*/
- 
+}
+
+else
+{   digitalWrite(motorPin1, LOW);
+    digitalWrite(motorPin2, LOW);
+    digitalWrite(motorPin3, LOW);
+    digitalWrite(motorPin4, LOW);
+}
   
 }
