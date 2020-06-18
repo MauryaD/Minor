@@ -14,7 +14,7 @@ void setup() {
   pinMode(4,INPUT); //pin connected to BOLT   bkwd -> P2
   pinMode(7,INPUT); //pin connected to BOLT   lft -> P3
   pinMode(8,INPUT); //pin connected to BOLT   ryt -> P4
-  pinMode(3,INPUT); // to stop Mickey!
+  pinMode(3,INPUT); // to stop Bolt!
   pinMode(motorPin1, OUTPUT);
   pinMode(motorPin2, OUTPUT);
   pinMode(motorPin3, OUTPUT);
